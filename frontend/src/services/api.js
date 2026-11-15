@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'http://localhost:4001/api';
 
 // Centraliza las llamadas con fetch, adjunta el token JWT y maneja errores HTTP
 export async function apiFetch(endpoint, options = {}) {
