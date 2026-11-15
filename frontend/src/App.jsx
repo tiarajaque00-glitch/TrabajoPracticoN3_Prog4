@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import InicioPublico from './pages/InicioPublico';
-import Login from './pages/login';
+import Login from './pages/Login';
+import Vehiculos from './pages/Vehiculos';
+import Conductores from './pages/Conductores';
+import Viajes from './pages/Viajes';
 
 export default function App() {
   const [usuario, setUsuario] = useState(() => {
@@ -8,6 +11,7 @@ export default function App() {
     return guardado ? JSON.parse(guardado) : null;
   });
   const [mostrarLogin, setMostrarLogin] = useState(false);
+  const [vista, setVista] = useState('viajes');
 
   const cerrarSesion = () => {
     localStorage.removeItem('token');
@@ -35,6 +39,28 @@ export default function App() {
     <div className="app-layout">
       <nav className="navbar">
         <div className="nav-brand">TransLogística</div>
+
+        <div className="nav-links">
+          <button
+            className={vista === 'viajes' ? 'active' : ''}
+            onClick={() => setVista('viajes')}
+          >
+            Viajes e Historial
+          </button>
+          <button
+            className={vista === 'vehiculos' ? 'active' : ''}
+            onClick={() => setVista('vehiculos')}
+          >
+            Vehículos
+          </button>
+          <button
+            className={vista === 'conductores' ? 'active' : ''}
+            onClick={() => setVista('conductores')}
+          >
+            Conductores
+          </button>
+        </div>
+
         <div className="nav-user">
           <span>Hola, {usuario.nombre}</span>
           <button className="btn btn-small btn-secondary" onClick={cerrarSesion}>
@@ -44,10 +70,9 @@ export default function App() {
       </nav>
 
       <main className="main-content">
-        <div className="card">
-          <h2>Panel de Gestión</h2>
-          <p>Sesión iniciada correctamente.</p>
-        </div>
+        {vista === 'viajes' && <Viajes />}
+        {vista === 'vehiculos' && <Vehiculos />}
+        {vista === 'conductores' && <Conductores />}
       </main>
     </div>
   );
