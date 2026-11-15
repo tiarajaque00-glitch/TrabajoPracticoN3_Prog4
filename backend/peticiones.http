@@ -1,0 +1,80 @@
+@baseUrl = http://localhost:4001/api
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0aWFyYUB0cmFuc3BvcnRlLmNvbSIsImlhdCI6MTc5NDc2NzU0OCwiZXhwIjoxNzk0NzgxOTQ4fQ.9_guFarKdv47yfk9Kwov4kAdzKm48-Uve1fqmtnN_AM
+
+### 1. Registrar usuario
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "nombre": "Tiara Admin",
+  "email": "tiara@transporte.com",
+  "contrasena": "password123"
+}
+
+### 2. Iniciar sesion (copiar token de la respuesta)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "tiara@transporte.com",
+  "contrasena": "password123"
+}
+
+### 3. Listar vehiculos
+GET {{baseUrl}}/vehiculos
+Authorization: Bearer {{token}}
+
+### 4. Crear vehiculo
+POST {{baseUrl}}/vehiculos
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "marca": "Scania",
+  "modelo": "R450",
+  "patente": "AG789XY",
+  "anio": 2023,
+  "capacidad_carga": 30000
+}
+
+### 5. Listar conductores
+GET {{baseUrl}}/conductores
+Authorization: Bearer {{token}}
+
+### 6. Crear conductor
+POST {{baseUrl}}/conductores
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "nombre": "Martin",
+  "apellido": "Sosa",
+  "numero_documento": "33987654",
+  "numero_licencia": "LIC-55412",
+  "fecha_alta_licencia": "2022-03-01",
+  "fecha_vencimiento_licencia": "2029-03-01"
+}
+
+### 7. Registrar viaje
+POST {{baseUrl}}/viajes
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "vehiculo_id": 1,
+  "conductor_id": 1,
+  "fecha_salida": "2026-11-10T08:00:00",
+  "fecha_llegada": "2026-11-10T16:30:00",
+  "origen": "La Rioja",
+  "destino": "Cordoba",
+  "kilometros": 430.5,
+  "observaciones": "Carga completa sin novedades"
+}
+
+### 8. Historial de viajes por vehiculo + total km
+GET {{baseUrl}}/viajes?vehiculo_id=1
+Authorization: Bearer {{token}}
+
+### 9. Historial de viajes por conductor + total km
+GET {{baseUrl}}/viajes?conductor_id=1
+Authorization: Bearer {{token}}
